@@ -11,6 +11,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,10 +21,12 @@ import android.view.View;
  */
 public class AvatarView extends View {
 
+    private final GestureDetector gestureDetector;
     private Paint paint;
     private Paint stroke;
     private Shader shader;
     private boolean isPressed;
+    private float rotation;
 
     public AvatarView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -32,6 +35,7 @@ public class AvatarView extends View {
         stroke.setColor(Color.MAGENTA);
         stroke.setStyle(Paint.Style.STROKE);
         stroke.setStrokeWidth(7);
+        gestureDetector = new GestureDetector(context, new GestureListener());
     }
 
     @Override
@@ -48,6 +52,7 @@ public class AvatarView extends View {
         paint.setShader(shader);
         paint.setAntiAlias(true);
         float halfSize = canvas.getHeight()/2;
+        canvas.rotate(rotation, halfSize, halfSize);
         canvas.drawCircle(halfSize, halfSize, halfSize, paint);
         if (isPressed) {
             canvas.drawCircle(halfSize, halfSize, halfSize-3, stroke);
@@ -67,6 +72,7 @@ public class AvatarView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 isPressed = true;
@@ -79,6 +85,20 @@ public class AvatarView extends View {
                 return true;
             default:
                 return super.onTouchEvent(event);
+        }
+    }
+
+    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            rotation += distanceX/2;
+            invalidate();
+            return true;
         }
     }
 }
