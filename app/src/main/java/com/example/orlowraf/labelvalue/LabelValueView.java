@@ -18,21 +18,21 @@ class LabelValueView extends LinearLayout {
 
     public LabelValueView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context);
         setOrientation(VERTICAL);
         TypedArray styledAttributes = context
                 .getTheme().obtainStyledAttributes(attrs, R.styleable.LabelValueView, 0, 0);
         labelContent = styledAttributes.getString(R.styleable.LabelValueView_labelText);
         valueContent = styledAttributes.getString(R.styleable.LabelValueView_valueText);
         styledAttributes.recycle();
-        init(context);
+        labelView.setText(labelContent);
+        valueView.setText(valueContent);
     }
 
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.label_value, this, true);
         labelView = (TextView) findViewById(R.id.label);
         valueView = (TextView) findViewById(R.id.value);
-        labelView.setText(labelContent);
-        valueView.setText(valueContent);
     }
 
     public void setContent(String label, String value) {

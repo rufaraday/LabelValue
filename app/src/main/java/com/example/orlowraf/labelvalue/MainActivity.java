@@ -13,5 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         labelValueView = (LabelValueView) findViewById(R.id.label_value_view);
         //labelValueView.setContent("Hello", "world");
+        LabelValueView.LabelValueModel model = new LabelValueView.LabelValueModel("Hello", "World");
+        labelValueView.setContent(model);
     }
 }
