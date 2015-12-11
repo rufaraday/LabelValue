@@ -34,12 +34,12 @@ class LabelValueView extends LinearLayout {
         valueView.setText(valueContent);
     }
 
-    public void setLayout(String label, String value) {
+    public void setContent(String label, String value) {
         labelView.setText(label);
         valueView.setText(value);
     }
 
-    public void setLayout(LabelValueModel model) {
+    public void setContent(LabelValueModel model) {
         labelView.setText(model.labelContent);
         valueView.setText(model.valueContent);
     }
