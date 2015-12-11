@@ -18,6 +18,7 @@ class LabelValueView extends LinearLayout {
 
     public LabelValueView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setOrientation(VERTICAL);
         TypedArray styledAttributes = context
                 .getTheme().obtainStyledAttributes(attrs, R.styleable.LabelValueView, 0, 0);
         labelContent = styledAttributes.getString(R.styleable.LabelValueView_labelText);
